@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Living Legacy | Mr. Bill</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;700&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-midnight: #02050d;
+      --ritual-gold: #d6b05f;
+      --flame-glow: rgba(214, 176, 95, 0.3);
+      --text-ghost: #b0b8c4;
+      --aurora-blue: rgba(18, 45, 99, 0.5);
+      --aurora-gold: rgba(214, 176, 95, 0.25);
+      --card-bg: rgba(255,255,255,0.03);
+      --danger: #c85c5c;
+      --success: #78d38b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background: var(--deep-midnight);
+      color: var(--text-ghost);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    #auroraContainer, #cursorCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+
+    #auroraContainer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      mix-blend-mode: screen;
+    }
+
+    .aurora {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      animation: auroraDrift 20s infinite alternate ease-in-out, auroraPulse 3s infinite ease-in-out;
+      will-change: transform, opacity;
+    }
+
+    .aurora-1 {
+      width: 70vw; height: 70vh;
+      background: radial-gradient(circle, var(--aurora-blue), transparent 70%);
+      animation-duration: 25s, 4s;
+      animation-delay: 0s, 0s;
+    }
+
+    .aurora-2 {
+      width: 80vw; height: 80vh;
+      background: radial-gradient(circle, var(--aurora-gold), transparent 70%);
+      animation-duration: 35s, 4s;
+      animation-delay: -10s, 0s;
+    }
+
+    .aurora-3 {
+      width: 60vw; height: 60vh;
+      background: radial-gradient(circle, var(--aurora-blue), transparent 70%);
+      animation-duration: 28s, 4s;
+      animation-delay: -15s, 0s;
+    }
+
+    .aurora-4 {
+      width: 90vw; height: 90vh;
+      background: radial-gradient(circle, var(--aurora-gold), transparent 70%);
+      animation-duration: 32s, 4s;
+      animation-delay: -5s, 0s;
+    }
+
+    .aurora-5 {
+      width: 75vw; height: 75vh;
+      background: radial-gradient(circle, var(--aurora-blue), transparent 70%);
+      animation-duration: 30s, 4s;
+      animation-delay: -8s, 0s;
+    }
+
+    .aurora-6 {
+      width: 85vw; height: 85vh;
+      background: radial-gradient(circle, var(--aurora-gold), transparent 70%);
+      animation-duration: 38s, 4s;
+      animation-delay: -20s, 0s;
+    }
+
+    .aurora-7 {
+      width: 65vw; height: 65vh;
+      background: radial-gradient(circle, var(--aurora-blue), transparent 70%);
+      animation-duration: 26s, 4s;
+      animation-delay: -12s, 0s;
+    }
+
+    .aurora-8 {
+      width: 95vw; height: 95vh;
+      background: radial-gradient(circle, var(--aurora-gold), transparent 70%);
+      animation-duration: 40s, 4s;
+      animation-delay: -18s, 0s;
+    }
+
+    .aurora-9 {
+      width: 70vw; height: 70vh;
+      background: radial-gradient(circle, var(--aurora-blue), transparent 70%);
+      animation-duration: 29s, 4s;
+      animation-delay: -25s, 0s;
+    }
+
+    @keyframes auroraDrift {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+      100% { transform: translate(15vw, 10vh) scale(1.3); opacity: 1; }
+    }
+
+    @keyframes auroraPulse {
+      0% { opacity: 0.6; transform: scale(0.9); }
+      50% { opacity: 0; transform: scale(1); }
+      100% { opacity: 0.6; transform: scale(0.9); }
+    }
+
+    #emberContainer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .ember {
+      position: absolute;
+      background: var(--ritual-gold);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--ritual-gold), 0 0 20px white;
+      animation: floatUp linear forwards;
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(-100vh) scale(0) rotate(360deg); opacity: 0; }
+    }
+
+    #cursorCanvas { z-index: 2; }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 10;
+    }
+
+    .flame-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 100px 20px 40px;
+    }
+
+    .eternal-flame {
+      width: 90px;
+      height: 90px;
+      background: radial-gradient(circle, #fff 0%, var(--ritual-gold) 30%, transparent 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 60px var(--ritual-gold), 0 0 120px var(--flame-glow);
+      animation: flicker 4s infinite ease-in-out, breathing 4s infinite ease-in-out;
+      margin-bottom: 30px;
+      transition: all 0.5s ease;
+      cursor: pointer;
+    }
+
+    .eternal-flame:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 80px var(--ritual-gold), 0 0 150px #fff;
+    }
+
+    .eternal-flame.flare-up {
+      animation: burst 1.5s ease-out forwards;
+    }
+
+    @keyframes flicker {
+      0%, 100% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 50px var(--ritual-gold); }
+      50% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 90px var(--ritual-gold); }
+    }
+
+    @keyframes breathing {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.25); }
+    }
+
+    @keyframes auroraFlash {
+      0%, 10%, 100% { opacity: 0.6; }
+      5%, 15% { opacity: 1; }
+    }
+
+    @keyframes burst {
+      0% { transform: scale(1); box-shadow: 0 0 50px var(--ritual-gold); }
+      20% { transform: scale(1.8); box-shadow: 0 0 200px #fff, 0 0 300px var(--ritual-gold); background: #fff; }
+      100% { transform: scale(1); box-shadow: 0 0 50px var(--ritual-gold); }
+    }
+
+    h1, h2 {
+      font-family: 'Cinzel', serif;
+      text-align: center;
+      color: var(--ritual-gold);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      text-shadow: 0 0 20px rgba(214, 176, 95, 0.5);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .subtitle {
+      text-align: center;
+      opacity: 0.6;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      margin-top: 20px;
+      max-width: 560px;
+    }
+
+    .ritual-divider {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(180deg, transparent, var(--ritual-gold), transparent);
+      margin: 40px auto;
+    }
+
+    .sacred-timeline {
+      max-width: 600px;
+      margin: 0 auto 80px;
+      padding: 0 20px;
+      border-left: 2px solid rgba(214, 176, 95, 0.2);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 50px;
+      transition: transform 0.3s ease;
+    }
+
+    .timeline-item:hover {
+      transform: translateX(10px);
+    }
+
+    .timeline-node {
+      position: absolute;
+      left: -11px; top: 0;
+      width: 20px; height: 20px;
+      background: var(--deep-midnight);
+      border: 2px solid var(--ritual-gold);
+      border-radius: 50%;
+      box-shadow: 0 0 15px var(--ritual-gold);
+      transition: 0.3s;
+    }
+
+    .timeline-item:hover .timeline-node {
+      background: var(--ritual-gold);
+      box-shadow: 0 0 25px #fff;
+    }
+
+    .timeline-year {
+      font-family: 'Cinzel', serif;
+      color: var(--ritual-gold);
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    .timeline-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #fff;
+      opacity: 0.8;
+    }
+
+    .section-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .board-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid rgba(214, 176, 95, 0.25);
+      background: rgba(255,255,255,0.02);
+      color: var(--text-ghost);
+      border-radius: 999px;
+      font-size: 0.9rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin: 0 auto 20px;
+      max-width: 760px;
+    }
+
+    .search-row input {
+      width: 100%;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(214, 176, 95, 0.25);
+      color: white;
+      padding: 14px 16px;
+      font-family: 'Inter', sans-serif;
+      border-radius: 12px;
+      outline: none;
+    }
+
+    .search-row input:focus {
+      border-color: var(--ritual-gold);
+      box-shadow: 0 0 0 2px rgba(214,176,95,0.12);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--ritual-gold);
+      color: var(--ritual-gold);
+      padding: 14px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+      transition: 0.25s;
+      white-space: nowrap;
+    }
+
+    .btn-secondary:hover {
+      background: var(--ritual-gold);
+      color: var(--deep-midnight);
+    }
+
+    .featured-banner {
+      max-width: 900px;
+      margin: 0 auto 28px;
+      padding: 18px 22px;
+      border: 1px solid rgba(214, 176, 95, 0.25);
+      background: linear-gradient(180deg, rgba(214,176,95,0.07), rgba(255,255,255,0.02));
+      border-radius: 18px;
+      text-align: center;
+      color: #fff;
+    }
+
+    #featuredText {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+    }
+
+    .featured-banner .label {
+      color: var(--ritual-gold);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 0.75rem;
+      margin-bottom: 8px;
+    }
+
+    .messages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      padding: 20px 0;
+      margin: 0 auto;
+    }
+
+    .message-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%);
+      border-top: 1px solid var(--ritual-gold);
+      border-bottom: 1px solid rgba(214, 176, 95, 0.1);
+      padding: 40px 30px 22px;
+      text-align: center;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .message-card::before {
+      content: "✦";
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%);
+      color: var(--ritual-gold);
+      background: var(--deep-midnight);
+      padding: 0 10px;
+      font-size: 0.8rem;
+    }
+
+    .message-card:hover {
+      background: linear-gradient(180deg, rgba(214, 176, 95, 0.05) 0%, rgba(255,255,255,0) 100%);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 0 20px rgba(214, 176, 95, 0.1);
+    }
+
+    .message-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: #fff;
+      line-height: 1.8;
+      word-wrap: break-word;
+    }
+
+    .author-name {
+      margin-top: 24px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--ritual-gold);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .card-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+
+
+    .form-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(214, 176, 95, 0.3);
+      max-width: 720px;
+      margin: 80px auto;
+      padding: 50px;
+      box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+    }
+
+    .form-group { margin-bottom: 22px; }
+
+    input, textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(214, 176, 95, 0.3);
+      color: white;
+      padding: 15px 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      border-bottom-color: var(--ritual-gold);
+      background: rgba(214, 176, 95, 0.05);
+    }
+
+    .helper-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .helper-row .count.good { color: var(--success); }
+    .helper-row .count.warn { color: var(--ritual-gold); }
+    .helper-row .count.bad { color: var(--danger); }
+
+    .btn-ritual {
+      background: transparent;
+      border: 1px solid var(--ritual-gold);
+      color: var(--ritual-gold);
+      padding: 18px 40px;
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.4s;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    .btn-ritual:hover {
+      background: var(--ritual-gold);
+      color: var(--deep-midnight);
+      box-shadow: 0 0 40px var(--flame-glow);
+    }
+
+    .audio-toggle {
+      position: fixed;
+      bottom: 30px; right: 30px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--ritual-gold);
+      color: var(--ritual-gold);
+      padding: 10px 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+      transition: 0.3s;
+      border-radius: 999px;
+    }
+
+    .audio-toggle:hover {
+      background: var(--ritual-gold);
+      color: var(--deep-midnight);
+    }
+
+    footer {
+      text-align: center;
+      padding: 80px 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      letter-spacing: 4px;
+      color: var(--ritual-gold);
+      opacity: 0.4;
+    }
+
+    @media (max-width: 700px) {
+      .search-row {
+        grid-template-columns: 1fr;
+      }
+
+      .form-card {
+        padding: 28px 18px;
+      }
+
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.4rem; letter-spacing: 4px; }
+      .messages-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <audio id="ambientMusic" autoplay loop muted>
+    <source src="ambient.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="auroraContainer">
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-2"></div>
+    <div class="aurora aurora-3"></div>
+    <div class="aurora aurora-4"></div>
+    <div class="aurora aurora-5"></div>
+    <div class="aurora aurora-6"></div>
+    <div class="aurora aurora-7"></div>
+    <div class="aurora aurora-8"></div>
+    <div class="aurora aurora-9"></div>
+    <div class="aurora aurora-10"></div>
+    <div class="aurora aurora-11"></div>
+    <div class="aurora aurora-12"></div>
+    <div class="aurora aurora-13"></div>
+  </div>
+
+  <canvas id="cursorCanvas"></canvas>
+  <div id="emberContainer"></div>
+
+  <button class="audio-toggle" id="audioBtn">Atmosphere: OFF</button>
+
+  <main class="content-wrapper">
+    <header class="flame-container">
+      <div class="eternal-flame" id="mainFlame" onclick="triggerFlare()" role="button" aria-label="Flare eternal flame"></div>
+      <h1>The Living Legacy</h1>
+      <p class="subtitle">
+        An engine of leadership. A spirit of class. The fire he started continues to burn in us.
+      </p>
+    </header>
+
+    <div class="ritual-divider"></div>
+
+    <section id="chronology">
+      <h2>The Sacred Chronology</h2>
+      <div class="sacred-timeline" id="timelineGrid"></div>
+    </section>
+
+    <div class="ritual-divider"></div>
+
+    <section id="gratitude" class="section-wrap">
+      <h2>The Hall of Gratitude</h2>
+
+      <div class="featured-banner" id="featuredBanner">
+        <div class="label">Featured Tribute</div>
+        <div id="featuredText">Loading...</div>
+      </div>
+
+      <div class="board-meta">
+        <div class="pill">Total tributes: <span id="tributeCount">0</span></div>
+        <div class="pill">Visible now: <span id="visibleCount">0</span></div>
+      </div>
+
+      <div class="search-row">
+        <input type="text" id="searchInput" placeholder="Search tributes by name or message...">
+        <button class="btn-secondary" id="resetBtn" type="button">Reset All</button>
+      </div>
+
+      <div class="messages-grid" id="messagesGrid"></div>
+    </section>
+
+    <div class="ritual-divider"></div>
+
+    <section id="offering">
+      <div class="form-card">
+        <h2>Offer Your Word</h2>
+        <form id="ritualForm">
+          <div class="form-group">
+            <input type="text" id="name" maxlength="40" placeholder="YOUR NAME (e.g., John Smith, Class of '20)" required autocomplete="off">
+          </div>
+          <div class="form-group">
+            <textarea id="message" rows="5" maxlength="240" placeholder="WRITE YOUR OFFERING TO THE HALL..." required></textarea>
+            <div class="helper-row">
+              <span>Tip: keep it heartfelt and concise.</span>
+              <span class="count" id="charCount">0 / 240</span>
+            </div>
+          </div>
+          <button type="submit" class="btn-ritual">Light the Beacon</button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      VIKING PRIDE &bull; STEADY POWER &bull; MR. BILL
+      <div style="opacity: 0.3; font-size: 0.7rem; margin-top: 20px; letter-spacing: 3px; color: var(--text-ghost);">PRESS B FOR A SECRET</div>
+    </footer>
+  </main>
+
+  <script>
+    // Randomize aurora positions on page load and during pulse cycles
+    function randomizeAuroraPosns() {
+      for (let i = 1; i <= 9; i++) {
+        const aurora = document.querySelector(`.aurora-${i}`);
+        const verticalPos = Math.random() * 200 - 50;
+        const horizontalPos = Math.random() * 200 - 50;
+        aurora.style.top = verticalPos + 'vh';
+        aurora.style.left = horizontalPos + 'vw';
+      }
+    }
+    
+    // Add animation iteration listeners to randomize positions during invisible phase
+    function setupAuroraAnimationListeners() {
+      for (let i = 1; i <= 9; i++) {
+        const aurora = document.querySelector(`.aurora-${i}`);
+        aurora.addEventListener('animationiteration', () => {
+          // Delay repositioning by 2 seconds to align with the 50% invisible keyframe (4s cycle)
+          setTimeout(() => {
+            randomizeAuroraPosns();
+          }, 2000);
+        });
+      }
+    }
+    
+    randomizeAuroraPosns();
+    setupAuroraAnimationListeners();
+
+    function escapeHTML(str) {
+      return String(str).replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag]));
+    }
+
+    const audio = document.getElementById('ambientMusic');
+    const audioBtn = document.getElementById('audioBtn');
+    let isPlaying = false;
+
+    function updateAudioButton() {
+      audioBtn.innerText = isPlaying ? "Atmosphere: ON" : "Atmosphere: OFF";
+    }
+
+    audioBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+      } else {
+        audio.muted = false;
+        audio.play();
+        isPlaying = true;
+      }
+      updateAudioButton();
+    });
+
+    const canvas = document.getElementById('cursorCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    let particlesArray = [];
+    const mouse = { x: null, y: null };
+
+    window.addEventListener('mousemove', (event) => {
+      mouse.x = event.x;
+      mouse.y = event.y;
+      if (particlesArray.length < 350) {
+        particlesArray.push(new Particle());
+      }
+    });
+
+    class Particle {
+      constructor() {
+        this.x = mouse.x;
+        this.y = mouse.y;
+        this.size = Math.random() * 4 + 1;
+        this.speedX = Math.random() * 2 - 1;
+        this.speedY = Math.random() * 2 - 1;
+        const colors = ['214, 176, 95', '176, 184, 196', '255, 255, 255', '0, 40, 60'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        this.color = `rgba(${randomColor}, ${Math.random() * 0.8 + 0.2})`;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.size > 0.1) this.size -= 0.05;
+      }
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+        if (particlesArray[i].size <= 0.2) {
+          particlesArray.splice(i, 1);
+          i--;
+        }
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    function spawnEmber() {
+      const container = document.getElementById('emberContainer');
+      const ember = document.createElement('div');
+      ember.className = 'ember';
+      ember.style.left = Math.random() * 100 + 'vw';
+      const size = Math.random() * 4 + 2;
+      ember.style.width = size + 'px';
+      ember.style.height = size + 'px';
+      ember.style.animationDuration = (Math.random() * 5 + 4) + 's';
+      ember.style.marginLeft = (Math.random() * 50 - 25) + 'px';
+      // Position at bottom of current viewport in document coordinates
+      ember.style.top = (window.scrollY + window.innerHeight - 10) + 'px';
+      container.appendChild(ember);
+      
+      ember.addEventListener('animationend', () => {
+        ember.remove();
+      });
+    }
+    setInterval(spawnEmber, 50);
+
+    const chronology = [
+      { year: "2020", text: "A new era begins as Mr. Bill takes the wheel, bringing his steady vision to the school." },
+      { year: "2025", text: "He supported the idea of a foundation of the new academic wing in the high school, expanding our educational horizons." },
+      { year: "2026", text: "The engine hums on as Mr. Bill steps down, leaving behind a legacy built on Viking pride." }
+    ];
+
+    document.getElementById('timelineGrid').innerHTML = chronology.map(item => `
+      <div class="timeline-item">
+        <div class="timeline-node"></div>
+        <div class="timeline-year">${escapeHTML(item.year)}</div>
+        <div class="timeline-text">"${escapeHTML(item.text)}"</div>
+      </div>
+    `).join('');
+
+    const STORAGE_KEY = "ritual_tributes_v5";
+    const initialTributes = [
+      { id: crypto.randomUUID(), name: "Vedant Sharda", text: "As you prepare to set sail on your next great adventure, I wanted to thank you for being such a steadfast leader for us here at The Village School.You’ve led this crew with strength and wisdom, and we are all better Vikings because of your leadership. May your future bring you nothing but smooth seas and following winds!" }
+    ];
+
+    let tributes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || initialTributes;
+    tributes = tributes.filter(t => t.name !== "Brother");
+    let featuredIndex = 0;
+
+    const messagesGrid = document.getElementById('messagesGrid');
+    const tributeCount = document.getElementById('tributeCount');
+    const visibleCount = document.getElementById('visibleCount');
+    const featuredText = document.getElementById('featuredText');
+    const searchInput = document.getElementById('searchInput');
+    const resetBtn = document.getElementById('resetBtn');
+    const charCount = document.getElementById('charCount');
+    const messageInput = document.getElementById('message');
+
+    function saveTributes() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tributes));
+    }
+
+    function renderFeatured(filteredTributes) {
+      if (!filteredTributes.length) {
+        featuredText.textContent = "No tributes match your search.";
+        return;
+      }
+      featuredIndex = featuredIndex % filteredTributes.length;
+      const item = filteredTributes[featuredIndex];
+      featuredText.innerHTML = `<strong>${escapeHTML(item.name)}</strong>: ${escapeHTML(item.text)}`;
+    }
+
+    function renderMessages() {
+      const query = searchInput.value.trim().toLowerCase();
+      const filtered = tributes.filter(t =>
+        t.name.toLowerCase().includes(query) || t.text.toLowerCase().includes(query)
+      );
+
+      tributeCount.textContent = tributes.length;
+      visibleCount.textContent = filtered.length;
+
+      renderFeatured(filtered);
+
+      messagesGrid.innerHTML = filtered.map(t => `
+        <div class="message-card" data-id="${t.id}">
+          <div class="message-text">"${escapeHTML(t.text)}"</div>
+          <div class="author-name">— ${escapeHTML(t.name)} —</div>
+        </div>
+      `).join('');
+    }
+
+    function triggerFlare() {
+      const flame = document.getElementById('mainFlame');
+      flame.classList.remove('flare-up');
+      void flame.offsetWidth;
+      flame.classList.add('flare-up');
+    }
+
+    messageInput.addEventListener('input', () => {
+      const remaining = 240 - messageInput.value.length;
+      charCount.textContent = `${messageInput.value.length} / 240`;
+      charCount.className = 'count ' + (remaining > 60 ? 'good' : remaining > 20 ? 'warn' : 'bad');
+    });
+
+    searchInput.addEventListener('input', () => {
+      featuredIndex = 0;
+      renderMessages();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      const ok = confirm('Reset all tributes and restore the default entry?');
+      if (!ok) return;
+      localStorage.removeItem(STORAGE_KEY);
+      tributes = JSON.parse(JSON.stringify(initialTributes));
+      saveTributes();
+      searchInput.value = '';
+      featuredIndex = 0;
+      renderMessages();
+    });
+
+    document.getElementById('ritualForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const rawName = document.getElementById('name').value.trim();
+      const rawText = document.getElementById('message').value.trim();
+      if (!rawName || !rawText) return;
+
+      const tribute = {
+        id: crypto.randomUUID(),
+        name: escapeHTML(rawName),
+        text: escapeHTML(rawText)
+      };
+
+      tributes.unshift(tribute);
+      saveTributes();
+      renderMessages();
+      document.getElementById('ritualForm').reset();
+      charCount.textContent = '0 / 240';
+      charCount.className = 'count good';
+      triggerFlare();
+      document.getElementById('gratitude').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      const isTypingInForm = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
+      if (!isTypingInForm && e.key.toLowerCase() === 'b') {
+        window.location.href = "secret.html";
+      }
+    });
+
+    renderMessages();
+    updateAudioButton();
+  </script>
+</body>
+</html>
