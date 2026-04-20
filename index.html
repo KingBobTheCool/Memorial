@@ -12,7 +12,7 @@
       --flame-glow: rgba(214, 176, 95, 0.3);
       --text-ghost: #b0b8c4;
       --aurora-blue: rgba(18, 45, 99, 0.5);
-      --aurora-gold: rgba(214, 176, 95, 0.25);
+      --aurora-gold: rgba(214, 176, 95, 0.35);
       --card-bg: rgba(255,255,255,0.03);
       --danger: #c85c5c;
       --success: #78d38b;
@@ -30,6 +30,9 @@
       overflow-x: hidden;
       cursor: crosshair;
     }
+
+    /* HIDDEN AUDIO ELEMENTS */
+    audio { display: none; }
 
     #auroraContainer, #cursorCanvas {
       position: fixed;
@@ -51,82 +54,35 @@
     .aurora {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
-      animation: auroraDrift 20s infinite alternate ease-in-out, auroraPulse 3s infinite ease-in-out;
+      filter: blur(60px) brightness(1.2);
+      animation: auroraDrift 35s infinite alternate cubic-bezier(0.4, 0, 0.2, 1), auroraPulse 5s infinite ease-in-out;
       will-change: transform, opacity;
     }
 
-    .aurora-1 {
-      width: 70vw; height: 70vh;
-      background: radial-gradient(circle, var(--aurora-blue), transparent 70%);
-      animation-duration: 25s, 4s;
-      animation-delay: 0s, 0s;
-    }
-
-    .aurora-2 {
-      width: 80vw; height: 80vh;
-      background: radial-gradient(circle, var(--aurora-gold), transparent 70%);
-      animation-duration: 35s, 4s;
-      animation-delay: -10s, 0s;
-    }
-
-    .aurora-3 {
-      width: 60vw; height: 60vh;
-      background: radial-gradient(circle, var(--aurora-blue), transparent 70%);
-      animation-duration: 28s, 4s;
-      animation-delay: -15s, 0s;
-    }
-
-    .aurora-4 {
-      width: 90vw; height: 90vh;
-      background: radial-gradient(circle, var(--aurora-gold), transparent 70%);
-      animation-duration: 32s, 4s;
-      animation-delay: -5s, 0s;
-    }
-
-    .aurora-5 {
-      width: 75vw; height: 75vh;
-      background: radial-gradient(circle, var(--aurora-blue), transparent 70%);
-      animation-duration: 30s, 4s;
-      animation-delay: -8s, 0s;
-    }
-
-    .aurora-6 {
-      width: 85vw; height: 85vh;
-      background: radial-gradient(circle, var(--aurora-gold), transparent 70%);
-      animation-duration: 38s, 4s;
-      animation-delay: -20s, 0s;
-    }
-
-    .aurora-7 {
-      width: 65vw; height: 65vh;
-      background: radial-gradient(circle, var(--aurora-blue), transparent 70%);
-      animation-duration: 26s, 4s;
-      animation-delay: -12s, 0s;
-    }
-
-    .aurora-8 {
-      width: 95vw; height: 95vh;
-      background: radial-gradient(circle, var(--aurora-gold), transparent 70%);
-      animation-duration: 40s, 4s;
-      animation-delay: -18s, 0s;
-    }
-
-    .aurora-9 {
-      width: 70vw; height: 70vh;
-      background: radial-gradient(circle, var(--aurora-blue), transparent 70%);
-      animation-duration: 29s, 4s;
-      animation-delay: -25s, 0s;
-    }
+    .aurora-1 { width: 70vw; height: 70vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 25s, 4s; animation-delay: 0s, 0s; }
+    .aurora-2 { width: 80vw; height: 80vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 35s, 4s; animation-delay: -10s, 0s; }
+    .aurora-3 { width: 60vw; height: 60vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 28s, 4s; animation-delay: -15s, 0s; }
+    .aurora-4 { width: 90vw; height: 90vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 32s, 4s; animation-delay: -5s, 0s; }
+    .aurora-5 { width: 75vw; height: 75vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 30s, 4s; animation-delay: -8s, 0s; }
+    .aurora-6 { width: 85vw; height: 85vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 38s, 4s; animation-delay: -20s, 0s; }
+    .aurora-7 { width: 65vw; height: 65vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 26s, 4s; animation-delay: -12s, 0s; }
+    .aurora-8 { width: 95vw; height: 95vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 40s, 4s; animation-delay: -18s, 0s; }
+    .aurora-9 { width: 70vw; height: 70vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 29s, 4s; animation-delay: -25s, 0s; }
+    .aurora-10 { width: 85vw; height: 85vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 33s, 5s; animation-delay: -2s, -1s; }
+    .aurora-11 { width: 65vw; height: 65vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 27s, 6s; animation-delay: -11s, -2s; }
+    .aurora-12 { width: 95vw; height: 95vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 39s, 4s; animation-delay: -17s, 0s; }
+    .aurora-13 { width: 75vw; height: 75vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 31s, 5s; animation-delay: -21s, -3s; }
 
     @keyframes auroraDrift {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-      100% { transform: translate(15vw, 10vh) scale(1.3); opacity: 1; }
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.6; }
+      33% { transform: translate(25vw, -15vh) scale(1.2) rotate(15deg); opacity: 1; filter: blur(50px) brightness(1.5); }
+      66% { transform: translate(-15vw, 20vh) scale(0.9) rotate(-10deg); opacity: 0.8; filter: blur(70px) brightness(1.3); }
+      100% { transform: translate(15vw, 10vh) scale(1.3) rotate(5deg); opacity: 1; filter: blur(45px) brightness(1.6); }
     }
 
     @keyframes auroraPulse {
       0% { opacity: 0.6; transform: scale(0.9); }
-      50% { opacity: 0; transform: scale(1); }
+      50% { opacity: 0.2; transform: scale(1); }
       100% { opacity: 0.6; transform: scale(0.9); }
     }
 
@@ -188,7 +144,7 @@
     }
 
     .eternal-flame.flare-up {
-      animation: burst 1.5s ease-out forwards;
+      animation: novaBurst 1.8s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
     }
 
     @keyframes flicker {
@@ -201,14 +157,10 @@
       50% { transform: scale(1.25); }
     }
 
-    @keyframes auroraFlash {
-      0%, 10%, 100% { opacity: 0.6; }
-      5%, 15% { opacity: 1; }
-    }
-
-    @keyframes burst {
+    @keyframes novaBurst {
       0% { transform: scale(1); box-shadow: 0 0 50px var(--ritual-gold); }
-      20% { transform: scale(1.8); box-shadow: 0 0 200px #fff, 0 0 300px var(--ritual-gold); background: #fff; }
+      15% { transform: scale(2.8); box-shadow: 0 0 300px #fff, 0 0 500px var(--ritual-gold), inset 0 0 50px #fff; background: #fff; }
+      40% { transform: scale(0.9); box-shadow: 0 0 80px var(--ritual-gold); background: radial-gradient(circle, #fff 0%, var(--ritual-gold) 50%, transparent 80%); }
       100% { transform: scale(1); box-shadow: 0 0 50px var(--ritual-gold); }
     }
 
@@ -455,8 +407,6 @@
       flex-wrap: wrap;
     }
 
-
-
     .form-card {
       background: rgba(0, 0, 0, 0.4);
       border: 1px solid rgba(214, 176, 95, 0.3);
@@ -556,15 +506,114 @@
       opacity: 0.4;
     }
 
+    .message-card.ignited {
+      animation: blaze 0.3s infinite alternate;
+      border-color: #ffaa00;
+      transform: translateY(-8px);
+    }
+
+    @keyframes blaze {
+      0% { box-shadow: 0 0 15px #ffaa00, 0 0 30px #ff4400, inset 0 0 10px rgba(255,170,0,0.3); }
+      100% { box-shadow: 0 0 25px #ffaa00, 0 0 50px #ff4400, inset 0 0 20px rgba(255,170,0,0.6); }
+    }
+
+    body.flash-active::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255, 170, 0, 0.15);
+      z-index: 9999;
+      pointer-events: none;
+      animation: pageFlash 0.6s ease-out forwards;
+    }
+
+    @keyframes pageFlash {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .ignite-btn, .delete-btn {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(214, 176, 95, 0.3);
+      color: var(--text-ghost);
+      border-radius: 8px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      font-weight: bold;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ignite-btn:hover {
+      border-color: #ffaa00;
+      color: #ffaa00;
+      box-shadow: 0 0 10px rgba(255,170,0,0.3);
+    }
+
+    .message-card.ignited .ignite-btn {
+      color: #ffaa00;
+      border-color: #ffaa00;
+    }
+
+    .ignite-count {
+      background: rgba(255, 170, 0, 0.15);
+      padding: 2px 8px;
+      border-radius: 6px; 
+      font-family: 'Playfair Display', serif; 
+      font-style: italic;
+      font-weight: bold; 
+      font-size: 1rem; 
+      color: #ffaa00;
+    }
+
+    .delete-btn {
+      display: none; 
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .delete-btn:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    body.admin-active .delete-btn {
+      display: flex;
+    }
+
+    #adminBadge {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--danger);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 999px;
+      font-family: 'Cinzel', serif;
+      font-weight: bold;
+      letter-spacing: 2px;
+      z-index: 10000;
+      display: none;
+      pointer-events: none;
+      box-shadow: 0 0 20px rgba(200, 92, 92, 0.6);
+    }
+
+    body.admin-active #adminBadge {
+      display: block;
+    }
+
     @media (max-width: 700px) {
       .search-row {
         grid-template-columns: 1fr;
       }
-
       .form-card {
         padding: 28px 18px;
       }
-
       h1 { font-size: 2rem; }
       h2 { font-size: 1.4rem; letter-spacing: 4px; }
       .messages-grid { grid-template-columns: 1fr; }
@@ -572,6 +621,12 @@
   </style>
 </head>
 <body>
+  
+  <audio id="igniteSound" src="ignite.mp3" preload="auto"></audio>
+  <audio id="orbSound" src="orb.mp3" preload="auto"></audio>
+
+  <div id="adminBadge">ADMIN MODE ACTIVE</div>
+
   <audio id="ambientMusic" autoplay loop muted>
     <source src="ambient.mp3" type="audio/mpeg">
   </audio>
@@ -664,27 +719,28 @@
   </main>
 
   <script>
-    // Randomize aurora positions on page load and during pulse cycles
     function randomizeAuroraPosns() {
-      for (let i = 1; i <= 9; i++) {
+      for (let i = 1; i <= 13; i++) {
         const aurora = document.querySelector(`.aurora-${i}`);
-        const verticalPos = Math.random() * 200 - 50;
-        const horizontalPos = Math.random() * 200 - 50;
-        aurora.style.top = verticalPos + 'vh';
-        aurora.style.left = horizontalPos + 'vw';
+        if(aurora) {
+            const verticalPos = Math.random() * 200 - 50;
+            const horizontalPos = Math.random() * 200 - 50;
+            aurora.style.top = verticalPos + 'vh';
+            aurora.style.left = horizontalPos + 'vw';
+        }
       }
     }
     
-    // Add animation iteration listeners to randomize positions during invisible phase
     function setupAuroraAnimationListeners() {
-      for (let i = 1; i <= 9; i++) {
+      for (let i = 1; i <= 13; i++) {
         const aurora = document.querySelector(`.aurora-${i}`);
-        aurora.addEventListener('animationiteration', () => {
-          // Delay repositioning by 2 seconds to align with the 50% invisible keyframe (4s cycle)
-          setTimeout(() => {
-            randomizeAuroraPosns();
-          }, 2000);
-        });
+        if(aurora) {
+            aurora.addEventListener('animationiteration', () => {
+            setTimeout(() => {
+                randomizeAuroraPosns();
+            }, 2500);
+            });
+        }
       }
     }
     
@@ -793,7 +849,6 @@
       ember.style.height = size + 'px';
       ember.style.animationDuration = (Math.random() * 5 + 4) + 's';
       ember.style.marginLeft = (Math.random() * 50 - 25) + 'px';
-      // Position at bottom of current viewport in document coordinates
       ember.style.top = (window.scrollY + window.innerHeight - 10) + 'px';
       container.appendChild(ember);
       
@@ -817,9 +872,9 @@
       </div>
     `).join('');
 
-    const STORAGE_KEY = "ritual_tributes_v5";
+    const STORAGE_KEY = "ritual_tributes_v7"; 
     const initialTributes = [
-      { id: crypto.randomUUID(), name: "Vedant Sharda", text: "As you prepare to set sail on your next great adventure, I wanted to thank you for being such a steadfast leader for us here at The Village School.You’ve led this crew with strength and wisdom, and we are all better Vikings because of your leadership. May your future bring you nothing but smooth seas and following winds!" }
+      { id: crypto.randomUUID(), name: "Vedant Sharda", text: "As you prepare to set sail on your next great adventure, I wanted to thank you for being such a steadfast leader for us here at The Village School.You’ve led this crew with strength and wisdom, and we are all better Vikings because of your leadership. May your future bring you nothing but smooth seas and following winds!", ignites: 0, userIgnited: false }
     ];
 
     let tributes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || initialTributes;
@@ -860,19 +915,81 @@
 
       renderFeatured(filtered);
 
-      messagesGrid.innerHTML = filtered.map(t => `
-        <div class="message-card" data-id="${t.id}">
+      messagesGrid.innerHTML = filtered.map(t => {
+        let igniteCount = t.ignites || 0;
+        let isBlazing = t.userIgnited ? 'ignited' : '';
+        let btnText = t.userIgnited ? '🔥 Unignite' : '🔥 Ignite';
+        return `
+        <div class="message-card ${isBlazing}" data-id="${t.id}">
           <div class="message-text">"${escapeHTML(t.text)}"</div>
           <div class="author-name">— ${escapeHTML(t.name)} —</div>
+          <div class="card-actions">
+            <button class="ignite-btn" data-action="ignite">${btnText} <span class="ignite-count">${igniteCount}</span></button>
+            <button class="delete-btn" data-action="delete">✕ Remove</button>
+          </div>
         </div>
-      `).join('');
+      `}).join('');
     }
+
+    messagesGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      
+      const card = btn.closest('.message-card');
+      const id = card.getAttribute('data-id');
+      const tributeIndex = tributes.findIndex(t => t.id === id);
+      if (tributeIndex === -1) return;
+
+      // 1) Ignite/Unignite Toggle Logic
+      if (btn.getAttribute('data-action') === 'ignite') {
+        const igniteAudio = document.getElementById('igniteSound');
+        
+        if (!tributes[tributeIndex].userIgnited) {
+          // IGNITE
+          igniteAudio.currentTime = 0;
+          igniteAudio.play().catch(e => console.log('Audio requires user interaction first.'));
+          tributes[tributeIndex].ignites = (tributes[tributeIndex].ignites || 0) + 1;
+          tributes[tributeIndex].userIgnited = true;
+
+          // Trigger screen flash
+          document.body.classList.remove('flash-active');
+          void document.body.offsetWidth; 
+          document.body.classList.add('flash-active');
+          setTimeout(() => { document.body.classList.remove('flash-active'); }, 600);
+        } else {
+          // UNIGNITE
+          tributes[tributeIndex].ignites = Math.max(0, (tributes[tributeIndex].ignites || 0) - 1);
+          tributes[tributeIndex].userIgnited = false;
+        }
+
+        saveTributes();
+        renderMessages();
+      }
+
+      // 2) Delete Logic
+      if (btn.getAttribute('data-action') === 'delete') {
+        if (confirm("Admin: Are you sure you want to permanently delete this tribute?")) {
+          tributes.splice(tributeIndex, 1);
+          saveTributes();
+          renderMessages();
+        }
+      }
+    });
 
     function triggerFlare() {
       const flame = document.getElementById('mainFlame');
+      const orbAudio = document.getElementById('orbSound');
+      
+      orbAudio.currentTime = 0;
+      orbAudio.play().catch(e => console.log('Audio requires user interaction first.'));
+
       flame.classList.remove('flare-up');
       void flame.offsetWidth;
       flame.classList.add('flare-up');
+
+      for(let i = 0; i < 40; i++) {
+        spawnEmber();
+      }
     }
 
     messageInput.addEventListener('input', () => {
@@ -906,7 +1023,9 @@
       const tribute = {
         id: crypto.randomUUID(),
         name: escapeHTML(rawName),
-        text: escapeHTML(rawText)
+        text: escapeHTML(rawText),
+        ignites: 0,
+        userIgnited: false
       };
 
       tributes.unshift(tribute);
@@ -921,8 +1040,15 @@
 
     document.addEventListener('keydown', (e) => {
       const isTypingInForm = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
-      if (!isTypingInForm && e.key.toLowerCase() === 'b') {
-        window.location.href = "secret.html";
+      
+      if (!isTypingInForm) {
+        if (e.key.toLowerCase() === 'b') {
+          window.location.href = "secret.html";
+        }
+        
+        if (e.key === ']') {
+          document.body.classList.toggle('admin-active');
+        }
       }
     });
 
