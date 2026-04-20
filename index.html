@@ -34,56 +34,59 @@
     /* HIDDEN AUDIO ELEMENTS */
     audio { display: none; }
 
-    #auroraContainer, #cursorCanvas {
+    #auroraContainer {
       position: fixed;
       top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-    }
-
-    #auroraContainer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw; height: 100vh;
       z-index: 0;
       mix-blend-mode: screen;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    #cursorCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 2;
     }
 
     .aurora {
       position: absolute;
       border-radius: 50%;
       filter: blur(60px) brightness(1.2);
-      animation: auroraDrift 35s infinite alternate cubic-bezier(0.4, 0, 0.2, 1), auroraPulse 5s infinite ease-in-out;
-      will-change: transform, opacity;
+      animation: auroraDrift 35s infinite alternate cubic-bezier(0.4, 0, 0.2, 1), auroraPulse 6s infinite linear;
+      will-change: transform, opacity, top, left;
     }
 
-    .aurora-1 { width: 70vw; height: 70vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 25s, 4s; animation-delay: 0s, 0s; }
-    .aurora-2 { width: 80vw; height: 80vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 35s, 4s; animation-delay: -10s, 0s; }
-    .aurora-3 { width: 60vw; height: 60vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 28s, 4s; animation-delay: -15s, 0s; }
-    .aurora-4 { width: 90vw; height: 90vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 32s, 4s; animation-delay: -5s, 0s; }
-    .aurora-5 { width: 75vw; height: 75vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 30s, 4s; animation-delay: -8s, 0s; }
-    .aurora-6 { width: 85vw; height: 85vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 38s, 4s; animation-delay: -20s, 0s; }
+    .aurora-1 { width: 70vw; height: 70vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 25s, 5s; animation-delay: 0s, 0s; }
+    .aurora-2 { width: 80vw; height: 80vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 35s, 6s; animation-delay: -10s, -2s; }
+    .aurora-3 { width: 60vw; height: 60vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 28s, 4s; animation-delay: -15s, -1s; }
+    .aurora-4 { width: 90vw; height: 90vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 32s, 7s; animation-delay: -5s, -3s; }
+    .aurora-5 { width: 75vw; height: 75vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 30s, 5s; animation-delay: -8s, -4s; }
+    .aurora-6 { width: 85vw; height: 85vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 38s, 6s; animation-delay: -20s, -2s; }
     .aurora-7 { width: 65vw; height: 65vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 26s, 4s; animation-delay: -12s, 0s; }
-    .aurora-8 { width: 95vw; height: 95vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 40s, 4s; animation-delay: -18s, 0s; }
-    .aurora-9 { width: 70vw; height: 70vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 29s, 4s; animation-delay: -25s, 0s; }
-    .aurora-10 { width: 85vw; height: 85vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 33s, 5s; animation-delay: -2s, -1s; }
-    .aurora-11 { width: 65vw; height: 65vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 27s, 6s; animation-delay: -11s, -2s; }
-    .aurora-12 { width: 95vw; height: 95vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 39s, 4s; animation-delay: -17s, 0s; }
-    .aurora-13 { width: 75vw; height: 75vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 31s, 5s; animation-delay: -21s, -3s; }
+    .aurora-8 { width: 95vw; height: 95vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 40s, 7s; animation-delay: -18s, -1s; }
+    .aurora-9 { width: 70vw; height: 70vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 29s, 5s; animation-delay: -25s, -3s; }
+    .aurora-10 { width: 85vw; height: 85vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 33s, 6s; animation-delay: -2s, -4s; }
+    .aurora-11 { width: 65vw; height: 65vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 27s, 5s; animation-delay: -11s, -2s; }
+    .aurora-12 { width: 95vw; height: 95vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 39s, 6s; animation-delay: -17s, 0s; }
+    .aurora-13 { width: 75vw; height: 75vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 31s, 4s; animation-delay: -21s, -1s; }
 
+    /* Removed opacity from drift to prevent conflicts with pulse */
     @keyframes auroraDrift {
-      0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.6; }
-      33% { transform: translate(25vw, -15vh) scale(1.2) rotate(15deg); opacity: 1; filter: blur(50px) brightness(1.5); }
-      66% { transform: translate(-15vw, 20vh) scale(0.9) rotate(-10deg); opacity: 0.8; filter: blur(70px) brightness(1.3); }
-      100% { transform: translate(15vw, 10vh) scale(1.3) rotate(5deg); opacity: 1; filter: blur(45px) brightness(1.6); }
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      33% { transform: translate(25vw, -15vh) scale(1.2) rotate(15deg); filter: blur(50px) brightness(1.5); }
+      66% { transform: translate(-15vw, 20vh) scale(0.9) rotate(-10deg); filter: blur(70px) brightness(1.3); }
+      100% { transform: translate(15vw, 10vh) scale(1.3) rotate(5deg); filter: blur(45px) brightness(1.6); }
     }
 
+    /* Pulse dips down to opacity 0 at the very start and end */
     @keyframes auroraPulse {
-      0% { opacity: 0.6; transform: scale(0.9); }
-      50% { opacity: 0.2; transform: scale(1); }
-      100% { opacity: 0.6; transform: scale(0.9); }
+      0%, 100% { opacity: 0; }
+      20%, 80% { opacity: 0.6; }
+      50% { opacity: 0.2; }
     }
 
     #emberContainer {
@@ -111,8 +114,6 @@
       50% { opacity: 0.8; }
       100% { transform: translateY(-100vh) scale(0) rotate(360deg); opacity: 0; }
     }
-
-    #cursorCanvas { z-index: 2; }
 
     .content-wrapper {
       position: relative;
@@ -623,7 +624,6 @@
 <body>
   
   <audio id="igniteSound" src="ignite.mp3" preload="auto"></audio>
-  <audio id="orbSound" src="orb.mp3" preload="auto"></audio>
 
   <div id="adminBadge">ADMIN MODE ACTIVE</div>
 
@@ -719,33 +719,27 @@
   </main>
 
   <script>
-    function randomizeAuroraPosns() {
+    function initializeAuroras() {
       for (let i = 1; i <= 13; i++) {
         const aurora = document.querySelector(`.aurora-${i}`);
         if(aurora) {
-            const verticalPos = Math.random() * 200 - 50;
-            const horizontalPos = Math.random() * 200 - 50;
-            aurora.style.top = verticalPos + 'vh';
-            aurora.style.left = horizontalPos + 'vw';
+          // Initial placement anywhere across the viewport
+          aurora.style.top = (Math.random() * 150 - 25) + 'vh';
+          aurora.style.left = (Math.random() * 150 - 25) + 'vw';
+          
+          // Only update coordinates when the pulse animation loops
+          // (which is precisely when opacity hits 0)
+          aurora.addEventListener('animationiteration', (e) => {
+            if (e.animationName === 'auroraPulse') {
+              aurora.style.top = (Math.random() * 150 - 25) + 'vh';
+              aurora.style.left = (Math.random() * 150 - 25) + 'vw';
+            }
+          });
         }
       }
     }
     
-    function setupAuroraAnimationListeners() {
-      for (let i = 1; i <= 13; i++) {
-        const aurora = document.querySelector(`.aurora-${i}`);
-        if(aurora) {
-            aurora.addEventListener('animationiteration', () => {
-            setTimeout(() => {
-                randomizeAuroraPosns();
-            }, 2500);
-            });
-        }
-      }
-    }
-    
-    randomizeAuroraPosns();
-    setupAuroraAnimationListeners();
+    initializeAuroras();
 
     function escapeHTML(str) {
       return String(str).replace(/[&<>'"]/g, tag => ({
@@ -940,24 +934,20 @@
       const tributeIndex = tributes.findIndex(t => t.id === id);
       if (tributeIndex === -1) return;
 
-      // 1) Ignite/Unignite Toggle Logic
       if (btn.getAttribute('data-action') === 'ignite') {
         const igniteAudio = document.getElementById('igniteSound');
         
         if (!tributes[tributeIndex].userIgnited) {
-          // IGNITE
           igniteAudio.currentTime = 0;
           igniteAudio.play().catch(e => console.log('Audio requires user interaction first.'));
           tributes[tributeIndex].ignites = (tributes[tributeIndex].ignites || 0) + 1;
           tributes[tributeIndex].userIgnited = true;
 
-          // Trigger screen flash
           document.body.classList.remove('flash-active');
           void document.body.offsetWidth; 
           document.body.classList.add('flash-active');
           setTimeout(() => { document.body.classList.remove('flash-active'); }, 600);
         } else {
-          // UNIGNITE
           tributes[tributeIndex].ignites = Math.max(0, (tributes[tributeIndex].ignites || 0) - 1);
           tributes[tributeIndex].userIgnited = false;
         }
@@ -966,7 +956,6 @@
         renderMessages();
       }
 
-      // 2) Delete Logic
       if (btn.getAttribute('data-action') === 'delete') {
         if (confirm("Admin: Are you sure you want to permanently delete this tribute?")) {
           tributes.splice(tributeIndex, 1);
