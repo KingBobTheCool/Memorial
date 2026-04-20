@@ -34,22 +34,19 @@
     /* HIDDEN AUDIO ELEMENTS */
     audio { display: none; }
 
-    #auroraContainer {
+    #auroraContainer, #cursorCanvas {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      z-index: 0;
-      mix-blend-mode: screen;
+      top: 0; 
+      left: 0;
+      width: 100%; 
+      height: 100%;
       pointer-events: none;
-      overflow: hidden;
     }
 
-    #cursorCanvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 2;
+    #auroraContainer {
+      z-index: 0;
+      mix-blend-mode: screen;
+      overflow: hidden;
     }
 
     .aurora {
@@ -74,7 +71,6 @@
     .aurora-12 { width: 95vw; height: 95vh; background: radial-gradient(circle, var(--aurora-gold), transparent 70%); animation-duration: 39s, 6s; animation-delay: -17s, 0s; }
     .aurora-13 { width: 75vw; height: 75vh; background: radial-gradient(circle, var(--aurora-blue), transparent 70%); animation-duration: 31s, 4s; animation-delay: -21s, -1s; }
 
-    /* Removed opacity from drift to prevent conflicts with pulse */
     @keyframes auroraDrift {
       0% { transform: translate(0, 0) scale(1) rotate(0deg); }
       33% { transform: translate(25vw, -15vh) scale(1.2) rotate(15deg); filter: blur(50px) brightness(1.5); }
@@ -82,11 +78,12 @@
       100% { transform: translate(15vw, 10vh) scale(1.3) rotate(5deg); filter: blur(45px) brightness(1.6); }
     }
 
-    /* Pulse dips down to opacity 0 at the very start and end */
     @keyframes auroraPulse {
-      0%, 100% { opacity: 0; }
-      20%, 80% { opacity: 0.6; }
-      50% { opacity: 0.2; }
+      0% { opacity: 0; transform: scale(0.9); }
+      20% { opacity: 0.9; }
+      50% { opacity: 0.4; transform: scale(1); }
+      80% { opacity: 0.9; }
+      100% { opacity: 0; transform: scale(0.9); }
     }
 
     #emberContainer {
@@ -114,6 +111,8 @@
       50% { opacity: 0.8; }
       100% { transform: translateY(-100vh) scale(0) rotate(360deg); opacity: 0; }
     }
+
+    #cursorCanvas { z-index: 2; }
 
     .content-wrapper {
       position: relative;
@@ -719,27 +718,40 @@
   </main>
 
   <script>
-    function initializeAuroras() {
+    function randomizeAuroraPosns(aurora) {
+      if (aurora) {
+        const verticalPos = Math.random() * 150 - 25;
+        const horizontalPos = Math.random() * 150 - 25;
+        aurora.style.top = verticalPos + 'vh';
+        aurora.style.left = horizontalPos + 'vw';
+      } else {
+        for (let i = 1; i <= 13; i++) {
+          const a = document.querySelector(`.aurora-${i}`);
+          if (a) {
+            const verticalPos = Math.random() * 150 - 25;
+            const horizontalPos = Math.random() * 150 - 25;
+            a.style.top = verticalPos + 'vh';
+            a.style.left = horizontalPos + 'vw';
+          }
+        }
+      }
+    }
+    
+    function setupAuroraAnimationListeners() {
       for (let i = 1; i <= 13; i++) {
         const aurora = document.querySelector(`.aurora-${i}`);
         if(aurora) {
-          // Initial placement anywhere across the viewport
-          aurora.style.top = (Math.random() * 150 - 25) + 'vh';
-          aurora.style.left = (Math.random() * 150 - 25) + 'vw';
-          
-          // Only update coordinates when the pulse animation loops
-          // (which is precisely when opacity hits 0)
           aurora.addEventListener('animationiteration', (e) => {
             if (e.animationName === 'auroraPulse') {
-              aurora.style.top = (Math.random() * 150 - 25) + 'vh';
-              aurora.style.left = (Math.random() * 150 - 25) + 'vw';
+              randomizeAuroraPosns(aurora);
             }
           });
         }
       }
     }
     
-    initializeAuroras();
+    randomizeAuroraPosns();
+    setupAuroraAnimationListeners();
 
     function escapeHTML(str) {
       return String(str).replace(/[&<>'"]/g, tag => ({
@@ -938,8 +950,9 @@
         const igniteAudio = document.getElementById('igniteSound');
         
         if (!tributes[tributeIndex].userIgnited) {
+          igniteAudio.volume = 1.0;
           igniteAudio.currentTime = 0;
-          igniteAudio.play().catch(e => console.log('Audio requires user interaction first.'));
+          igniteAudio.play().catch(e => alert("AUDIO ERROR: " + e.name + " - " + e.message));
           tributes[tributeIndex].ignites = (tributes[tributeIndex].ignites || 0) + 1;
           tributes[tributeIndex].userIgnited = true;
 
